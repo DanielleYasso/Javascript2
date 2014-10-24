@@ -17,6 +17,14 @@
     <h1>Sorting Hat</h1>
     
     <div class="container">
+
+        <div class="form">
+            <input type="number" id="student_count">
+            <button id="set_student_count">Set Student Count</button>
+            <div id="count"></div>
+        </div>
+
+
         <div class="house col-md-2">
             Gryffindor
         </div>
@@ -37,5 +45,31 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    <script>
+        var studentCount = 0;
+        var countButton = document.getElementById("set_student_count");
+
+        countButton.addEventListener("click", function() {
+            // get count div
+            var countDiv = document.getElementById("count");
+
+            // get user input for count value
+            var countValue = document.getElementById("student_count").value;
+            if (!countValue || countValue == NaN)
+            {
+                countValue = 0;
+            }
+            // set new value for global studentCount based on input
+            studentCount = countValue;
+
+            // Display new value of studentCount in the div
+            countDiv.innerHTML = studentCount;
+
+            // reset student_count input field
+            countValue.value = 0;
+        });
+    </script>
+
   </body>
 </html>
