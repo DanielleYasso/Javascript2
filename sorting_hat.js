@@ -121,24 +121,12 @@ function assignHouse(studentName)
             }
     else
     {
-        switch (houseNum) 
-        {
-            case 1: // Gryffindor
-                houses[HOUSE[1]].push(studentName);
-                break;
-            case 2: // Slytherin
-                houses[HOUSE[2]].push(studentName);
-                break;
-            case 3: // Ravenclaw
-                houses[HOUSE[3]].push(studentName);
-                break;
-            case 4: // Hufflepuff
-                houses[HOUSE[4]].push(studentName);
-                break;
-        }
-        console.log(HOUSE[houseNum] + ": " + houses[HOUSE[houseNum]]);
         // set name of house student was sorted into
         studentHouse = HOUSE[houseNum];
+
+        houses[studentHouse].push(studentName);
+
+        console.log(HOUSE[houseNum] + ": " + houses[HOUSE[houseNum]]);   
     } 
 }
 
