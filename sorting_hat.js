@@ -10,7 +10,8 @@
                 1: "Gryffindor",
                 2: "Slytherin",
                 3: "Ravenclaw",
-                4: "Hufflepuff"
+                4: "Hufflepuff",
+                5: "Dumbloedore's Army"
             }
 
         var studentCount = 0;
@@ -24,10 +25,11 @@
         var countButton = document.getElementById("set_student_count");
         countButton.addEventListener("click", function() {
             // clear houses for new sorting!
-            for (var i = 1; i <= 4; i++)
+            for (var i = 1; i <= 5; i++)
             {
                 houses[HOUSE[i]] = [];
             }
+
 
             // get user input for count value
             var countValue = document.getElementById("student_count").value;
@@ -59,7 +61,13 @@
         sortButton.addEventListener("click", function() {
             // get student name
             var studentName = document.getElementById("student_name").value
+
+            // sort student into a house
             var studentHouse = assignHouse(studentName);
+            // Dumbledore's Army?
+            dumbledore(studentName);
+
+            // Display student and house
             var sortedDiv = document.getElementById("sorted_student");
             sortedDiv.innerHTML = studentName + ": " + studentHouse + "!"
 
@@ -75,6 +83,8 @@
                 // disable sort button when all students are sorted
                 sortButton.disabled = true;
             }
+
+            
         });
 
         
@@ -125,4 +135,13 @@
                 return true;
             }
             return false;
+        }
+
+        function dumbledore(studentName)
+        {
+        	if (Math.floor((Math.random() * 2) + 1) == 2)
+        	{
+        		houses["Dumbledore's Army"].push(studentName);
+        		console.log(studentName + " added to DA");
+        	}
         }
