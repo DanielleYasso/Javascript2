@@ -14,29 +14,46 @@ var HOUSE = {
         5: "Dumbloedore's Army"
     }
 
-$( document ).ready(function() 
+// Global variable declarations
+var countIsOdd;
+var fourthOfStudents;
+var studentHouse;
+
+$(document).ready(function() 
 {
 	// Variable declarations
-	var studentCount;
-	var countIsOdd;
-	var fourthOfStudents;
-	var countDiv;
-	var sortButton;
-	var countButton;
+	var countValue;
+	var studentName;
+	var studentCount = 0;
 
-	studentCount = 0;
+	var countDiv;
+	var countButton;
+	var sortButton;
+
+	var gryffDiv;
+	var huffDiv;
+	var ravDiv;
+	var slythDiv;
+	var daDiv;
 
 	// get count div
-	countDiv = document.getElementById("count");
+	countDiv = $("#count");
 
-	// get count button and create click event
-	countButton = document.getElementById("set_student_count");
+	// get buttons
+	sortButton = $("#sort_student");
+	countButton = $("#set_student_count");
 
-	// get sort button
-	sortButton = document.getElementById("sort_student");
-	sortButton.disabled = true;
+	// Disable sort if no students to sort
+    if (studentCount == 0)
+    {
+        // disable sort button when all students are sorted
+        $(sortButton).prop("disabled", true);
+        $("#student_name").prop("disabled", true);	    
+    } 
 
-	countButton.addEventListener("click", function() {
+
+	$(countButton).click( function() 
+	{
 	    // clear houses for new sorting!
 	    for (var i = 1; i <= 5; i++)
 	    {
@@ -44,7 +61,7 @@ $( document ).ready(function()
 	    }
 
 	    // get user input for count value
-	    var countValue = document.getElementById("student_count").value;
+	    countValue = $("#student_count").val();
 	    if (!countValue || countValue == NaN)
 	    {
 	        countValue = 0;
@@ -53,47 +70,42 @@ $( document ).ready(function()
 	    studentCount = countValue;
 
 	    // did user input odd number of students?
-	    countIsOdd = (studentCount % 2 != 0)
+	    countIsOdd = (studentCount % 2 != 0);
 	    fourthOfStudents = Math.floor(studentCount/4);
 
 	    // Display new value of studentCount in the div
-	    countDiv.innerHTML = "Count: " + studentCount;
+	    $(countDiv).text("Count: " + studentCount);
 
 	    // reset student_count input field
-	    countValue.value = 0;
+	    $(student_count).val(0);
 
 	    if (studentCount > 0)
 	    {
-	        sortButton.disabled = false;
+	        $(sortButton).prop("disabled", false);
+	        $("#student_name").prop("disabled", false);	
 	    }
 	});
 
-
-	sortButton.addEventListener("click", function() {
+	$(sortButton).click( function() 
+	{
 	    // get student name
-	    var studentName = document.getElementById("student_name").value
+	    studentName = $("#student_name").val();
 
 	    // sort student into a house
-	    var studentHouse = assignHouse(studentName);
+	    assignHouse(studentName);
+
 	    // Dumbledore's Army?
 	    dumbledore(studentName);
 
 	    // Display student and house
-	    var sortedDiv = document.getElementById("sorted_student");
-	    sortedDiv.innerHTML = studentName + ": " + studentHouse + "!"
+	    $("#sorted_student").text(studentName + ": " + studentHouse + "!");
 
 	    // decrement student Count
 	    studentCount--;
 
 	    // update display of students left to sort
-	    countDiv.innerHTML = "Students to sort: " + studentCount;
+	    $(countDiv).text("Students to sort: " + studentCount);
 
-	    // Check if all students are sorted
-	    if (studentCount == 0)
-	    {
-	        // disable sort button when all students are sorted
-	        sortButton.disabled = true;
-	    } 
 	});
 });
 
@@ -125,8 +137,8 @@ function assignHouse(studentName)
                 break;
         }
         console.log(HOUSE[houseNum] + ": " + houses[HOUSE[houseNum]]);
-        // return name of house student was sorted into
-        return HOUSE[houseNum];
+        // set name of house student was sorted into
+        studentHouse = HOUSE[houseNum];
     } 
 }
 
