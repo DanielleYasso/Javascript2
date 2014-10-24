@@ -6,7 +6,7 @@ var houses = {
     "Dumbledore's Army": []
 };
 
-HOUSE = {
+var HOUSE = {
         1: "Gryffindor",
         2: "Slytherin",
         3: "Ravenclaw",
@@ -14,77 +14,88 @@ HOUSE = {
         5: "Dumbloedore's Army"
     }
 
-var studentCount = 0;
-var countIsOdd;
-var fourthOfStudents;
+$( document ).ready(function() 
+{
+	// Variable declarations
+	var studentCount;
+	var countIsOdd;
+	var fourthOfStudents;
+	var countDiv;
+	var sortButton;
+	var countButton;
 
-// get count div
-var countDiv = document.getElementById("count");
+	studentCount = 0;
 
-// get count button and create click event
-var countButton = document.getElementById("set_student_count");
-countButton.addEventListener("click", function() {
-    // clear houses for new sorting!
-    for (var i = 1; i <= 5; i++)
-    {
-        houses[HOUSE[i]] = [];
-    }
+	// get count div
+	countDiv = document.getElementById("count");
+
+	// get count button and create click event
+	countButton = document.getElementById("set_student_count");
+
+	// get sort button
+	sortButton = document.getElementById("sort_student");
+	sortButton.disabled = true;
+
+	countButton.addEventListener("click", function() {
+	    // clear houses for new sorting!
+	    for (var i = 1; i <= 5; i++)
+	    {
+	        houses[HOUSE[i]] = [];
+	    }
+
+	    // get user input for count value
+	    var countValue = document.getElementById("student_count").value;
+	    if (!countValue || countValue == NaN)
+	    {
+	        countValue = 0;
+	    }
+	    // set new value for global studentCount based on input
+	    studentCount = countValue;
+
+	    // did user input odd number of students?
+	    countIsOdd = (studentCount % 2 != 0)
+	    fourthOfStudents = Math.floor(studentCount/4);
+
+	    // Display new value of studentCount in the div
+	    countDiv.innerHTML = "Count: " + studentCount;
+
+	    // reset student_count input field
+	    countValue.value = 0;
+
+	    if (studentCount > 0)
+	    {
+	        sortButton.disabled = false;
+	    }
+	});
 
 
-    // get user input for count value
-    var countValue = document.getElementById("student_count").value;
-    if (!countValue || countValue == NaN)
-    {
-        countValue = 0;
-    }
-    // set new value for global studentCount based on input
-    studentCount = countValue;
+	sortButton.addEventListener("click", function() {
+	    // get student name
+	    var studentName = document.getElementById("student_name").value
 
-    // did user input odd number of students?
-    countIsOdd = (studentCount % 2 != 0)
-    fourthOfStudents = Math.floor(studentCount/4);
+	    // sort student into a house
+	    var studentHouse = assignHouse(studentName);
+	    // Dumbledore's Army?
+	    dumbledore(studentName);
 
-    // Display new value of studentCount in the div
-    countDiv.innerHTML = "Count: " + studentCount;
+	    // Display student and house
+	    var sortedDiv = document.getElementById("sorted_student");
+	    sortedDiv.innerHTML = studentName + ": " + studentHouse + "!"
 
-    // reset student_count input field
-    countValue.value = 0;
+	    // decrement student Count
+	    studentCount--;
 
-    if (studentCount > 0)
-    {
-        sortButton.disabled = false;
-    }
+	    // update display of students left to sort
+	    countDiv.innerHTML = "Students to sort: " + studentCount;
+
+	    // Check if all students are sorted
+	    if (studentCount == 0)
+	    {
+	        // disable sort button when all students are sorted
+	        sortButton.disabled = true;
+	    } 
+	});
 });
-
-// get sort button and create click event
-var sortButton = document.getElementById("sort_student");
-sortButton.addEventListener("click", function() {
-    // get student name
-    var studentName = document.getElementById("student_name").value
-
-    // sort student into a house
-    var studentHouse = assignHouse(studentName);
-    // Dumbledore's Army?
-    dumbledore(studentName);
-
-    // Display student and house
-    var sortedDiv = document.getElementById("sorted_student");
-    sortedDiv.innerHTML = studentName + ": " + studentHouse + "!"
-
-    // decrement student Count
-    studentCount--;
-
-    // update display of students left to sort
-    countDiv.innerHTML = "Students to sort: " + studentCount;
-
-    // Check if all students are sorted
-    if (studentCount == 0)
-    {
-        // disable sort button when all students are sorted
-        sortButton.disabled = true;
-    } 
-});
-
 
 
 function assignHouse(studentName)
