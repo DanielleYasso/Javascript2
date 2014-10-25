@@ -21,8 +21,7 @@ var studentHouse;
 var studentCount;
 var dividesByFour;
 
-$(document).ready(function() 
-{
+$(document).ready(function() {
 	// Variable declarations
 	var countValue;
 	var studentName;
@@ -50,11 +49,9 @@ $(document).ready(function()
     $("#student_name").prop("disabled", true);		
 
 
-	$(countButton).click( function() 
-	{
+	$(countButton).click( function() {
 	    // clear houses for new sorting!
-	    for (var i = 1; i <= 5; i++)
-	    {
+	    for (var i = 1; i <= 5; i++) {
 	        houses[HOUSE[i]] = [];
     		$("#" + HOUSE[i]).empty();
 	    }
@@ -62,8 +59,7 @@ $(document).ready(function()
 
 	    // get user input for count value
 	    countValue = $("#student_count").val();
-	    if (!countValue || countValue == NaN || countValue < 0)
-	    {
+	    if (!countValue || countValue == NaN || countValue < 0) {
 	        countValue = 0;
 	    }
 
@@ -75,14 +71,12 @@ $(document).ready(function()
 	    fullOfStudents = Math.floor(studentCount/4);
 
 	    // if it's an even number, does it divide evenly by 4
-	    if (!countIsOdd && countValue >= 4)
-	    { 
+	    if (!countIsOdd && countValue >= 4) { 
 	    	dividesByFour = (studentCount % 4 == 0);
 		}
 
 		// error checking for small values
-		if (countValue <= 4)
-	    {
+		if (countValue <= 4) {
 	    	fullOfStudents = 1;
 	    }
 
@@ -92,15 +86,13 @@ $(document).ready(function()
 	    // reset student_count input field
 	    $(student_count).val(0);
 
-	    if (studentCount > 0)
-	    {
+	    if (studentCount > 0) {
 	        $(sortButton).prop("disabled", false);
 	        $("#student_name").prop("disabled", false);	
 	    }
 	});
 
-	$(sortButton).click( function() 
-	{
+	$(sortButton).click( function() {
 	    // get student name
 	    studentName = $("#student_name").val();
 
@@ -119,14 +111,12 @@ $(document).ready(function()
 	    // update display of students left to sort
 	    $(countDiv).text("Students to sort: " + studentCount);
 		
-		if (studentCount > 0)
-	    {
+		if (studentCount > 0) {
 	        $(sortButton).prop("disabled", false);
 	        $("#student_name").prop("disabled", false);	
 	    }
 	    // Disable sort if no students to sort
-	    else
-	    {
+	    else {
 	        // disable sort button when all students are sorted
 	        $(sortButton).prop("disabled", true);
 	        $("#student_name").prop("disabled", true);	    
@@ -136,17 +126,14 @@ $(document).ready(function()
 });
 
 
-function assignHouse(studentName)
-{
+function assignHouse(studentName) {
     // randomly assign student to a house
     houseNum = Math.floor((Math.random() * 4) + 1);
     // check if house is full, if so, try again!
-    if (isFull(HOUSE[houseNum]))
-            {
-                assignHouse(studentName);
-            }
-    else
-    {
+    if (isFull(HOUSE[houseNum])) {
+        assignHouse(studentName);
+    }
+    else {
         // set name of house student was sorted into
         studentHouse = HOUSE[houseNum];
 
@@ -160,32 +147,26 @@ function assignHouse(studentName)
     } 
 }
 
-function isFull(houseName)
-{
-    if (houses[houseName].length >= fullOfStudents)
-    {
+function isFull(houseName) {
+    if (houses[houseName].length >= fullOfStudents) {
      	
         // if odd number students, one house gets one more than others
         // update countIsOdd, so other houses don't get extra students	
-        if (countIsOdd)
-        {
+        if (countIsOdd) {
        		countIsOdd = false;
        		// dividesByFour = (studentCount % 4 == 0);
             return false;
         }
         // if even number of students but not divisible by 4   
-        if (!dividesByFour)
-        {
+        if (!dividesByFour) {
         	// dividesByFour = true;
         	// countIsOdd = true;
-        	if (houses[houseName].length == (fullOfStudents))
-        	{
+        	if (houses[houseName].length == (fullOfStudents)) {
         		// countIsOdd = true;
         		// dividesByFour = true;
         		return false;
         	}
-        	if (houses[houseName].length == (fullOfStudents + 1))
-        	{
+        	if (houses[houseName].length == (fullOfStudents + 1)) {
         		return true;
         	}
         }
@@ -194,10 +175,8 @@ function isFull(houseName)
     return false;
 }
 
-function dumbledore(studentName)
-{
-	if (Math.floor((Math.random() * 2) + 1) == 2)
-	{
+function dumbledore(studentName) {
+	if (Math.floor((Math.random() * 2) + 1) == 2) {
 		houses["DA"].push(studentName);
 
 		// display student under house name
