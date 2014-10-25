@@ -170,14 +170,24 @@ function isFull(houseName)
         if (countIsOdd)
         {
        		countIsOdd = false;
+       		// dividesByFour = (studentCount % 4 == 0);
             return false;
         }
         // if even number of students but not divisible by 4   
         if (!dividesByFour)
         {
-        	dividesByFour = true;
-        	countIsOdd = true;
-        	return false;
+        	// dividesByFour = true;
+        	// countIsOdd = true;
+        	if (houses[houseName].length == (fullOfStudents))
+        	{
+        		// countIsOdd = true;
+        		// dividesByFour = true;
+        		return false;
+        	}
+        	if (houses[houseName].length == (fullOfStudents + 1))
+        	{
+        		return true;
+        	}
         }
         return true;
     }
