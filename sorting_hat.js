@@ -59,7 +59,11 @@ $(document).ready(function()
 	    for (var i = 1; i <= 5; i++)
 	    {
 	        houses[HOUSE[i]] = [];
+	        // display student under house name
+	        if (i != 5)
+        		$("#" + HOUSE[i]).empty();
 	    }
+	    
 
 	    // get user input for count value
 	    countValue = $("#student_count").val();
@@ -67,6 +71,7 @@ $(document).ready(function()
 	    {
 	        countValue = 0;
 	    }
+
 	    // set new value for global studentCount based on input
 	    studentCount = countValue;
 
@@ -75,10 +80,16 @@ $(document).ready(function()
 	    fullOfStudents = Math.floor(studentCount/openHouses);
 
 	    // if it's an even number, does it divide evenly by 4
-	    if (!countIsOdd)
+	    if (!countIsOdd && countValue >= 4)
 	    { 
 	    	dividesByFour = (studentCount % 4 == 0);
 		}
+
+		// error checking for small values
+		if (countValue <= 4)
+	    {
+	    	fullOfStudents = 1;
+	    }
 
 
 	    // Display new value of studentCount in the div
