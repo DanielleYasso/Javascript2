@@ -3,7 +3,7 @@ var houses = {
     "Slytherin": [],
     "Ravenclaw": [],
     "Hufflepuff": [],
-    "Dumbledore's Army": []
+    "DA": []
 };
 
 var HOUSE = {
@@ -11,14 +11,13 @@ var HOUSE = {
         2: "Slytherin",
         3: "Ravenclaw",
         4: "Hufflepuff",
-        5: "Dumbloedore's Army"
+        5: "DA"
     }
 
 // Global variable declarations
 var countIsOdd;
 var fullOfStudents;
 var studentHouse;
-var openHouses;
 var studentCount;
 var dividesByFour;
 
@@ -27,9 +26,7 @@ $(document).ready(function()
 	// Variable declarations
 	var countValue;
 	var studentName;
-	var openHouses = 4;
 	studentCount = 0;
-	dividesByFour = true;
 
 	var countDiv;
 	var countButton;
@@ -59,9 +56,7 @@ $(document).ready(function()
 	    for (var i = 1; i <= 5; i++)
 	    {
 	        houses[HOUSE[i]] = [];
-	        // display student under house name
-	        if (i != 5)
-        		$("#" + HOUSE[i]).empty();
+    		$("#" + HOUSE[i]).empty();
 	    }
 	    
 
@@ -77,7 +72,7 @@ $(document).ready(function()
 
 	    // did user input odd number of students? divides by 4?
 	    countIsOdd = (studentCount % 2 != 0);
-	    fullOfStudents = Math.floor(studentCount/openHouses);
+	    fullOfStudents = Math.floor(studentCount/4);
 
 	    // if it's an even number, does it divide evenly by 4
 	    if (!countIsOdd && countValue >= 4)
@@ -184,8 +179,6 @@ function isFull(houseName)
         	countIsOdd = true;
         	return false;
         }
-        
-        openHouses--;
         return true;
     }
     return false;
@@ -195,7 +188,10 @@ function dumbledore(studentName)
 {
 	if (Math.floor((Math.random() * 2) + 1) == 2)
 	{
-		houses["Dumbledore's Army"].push(studentName);
+		houses["DA"].push(studentName);
+
+		// display student under house name
+        $("#DA").append("<li>" + studentName + "</li>");
 		console.log(studentName + " added to DA");
 	}
 }
