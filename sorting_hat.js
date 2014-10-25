@@ -16,15 +16,20 @@ var HOUSE = {
 
 // Global variable declarations
 var countIsOdd;
-var fourthOfStudents;
+var fullOfStudents;
 var studentHouse;
+var openHouses;
+var studentCount;
+var dividesByFour;
 
 $(document).ready(function() 
 {
 	// Variable declarations
 	var countValue;
 	var studentName;
-	var studentCount = 0;
+	var openHouses = 4;
+	studentCount = 0;
+	dividesByFour = true;
 
 	var countDiv;
 	var countButton;
@@ -43,13 +48,9 @@ $(document).ready(function()
 	sortButton = $("#sort_student");
 	countButton = $("#set_student_count");
 
-	// Disable sort if no students to sort
-    if (studentCount == 0)
-    {
-        // disable sort button when all students are sorted
-        $(sortButton).prop("disabled", true);
-        $("#student_name").prop("disabled", true);	    
-    } 
+	// start with sorting disabled
+	$(sortButton).prop("disabled", true);
+    $("#student_name").prop("disabled", true);		
 
 
 	$(countButton).click( function() 
@@ -69,9 +70,16 @@ $(document).ready(function()
 	    // set new value for global studentCount based on input
 	    studentCount = countValue;
 
-	    // did user input odd number of students?
+	    // did user input odd number of students? divides by 4?
 	    countIsOdd = (studentCount % 2 != 0);
-	    fourthOfStudents = Math.floor(studentCount/4);
+	    fullOfStudents = Math.floor(studentCount/openHouses);
+
+	    // if it's an even number, does it divide evenly by 4
+	    if (!countIsOdd)
+	    { 
+	    	dividesByFour = (studentCount % 4 == 0);
+		}
+
 
 	    // Display new value of studentCount in the div
 	    $(countDiv).text("Count: " + studentCount);
@@ -105,6 +113,19 @@ $(document).ready(function()
 
 	    // update display of students left to sort
 	    $(countDiv).text("Students to sort: " + studentCount);
+		
+		if (studentCount > 0)
+	    {
+	        $(sortButton).prop("disabled", false);
+	        $("#student_name").prop("disabled", false);	
+	    }
+	    // Disable sort if no students to sort
+	    else
+	    {
+	        // disable sort button when all students are sorted
+	        $(sortButton).prop("disabled", true);
+	        $("#student_name").prop("disabled", true);	    
+	    } 
 
 	});
 });
@@ -124,7 +145,11 @@ function assignHouse(studentName)
         // set name of house student was sorted into
         studentHouse = HOUSE[houseNum];
 
+        // add student to houses object
         houses[studentHouse].push(studentName);
+
+        // display student under house name
+        $("#" + studentHouse).append("<li>" + studentName + "</li>");
 
         console.log(HOUSE[houseNum] + ": " + houses[HOUSE[houseNum]]);   
     } 
@@ -132,15 +157,25 @@ function assignHouse(studentName)
 
 function isFull(houseName)
 {
-    if (houses[houseName].length >= fourthOfStudents)
+    if (houses[houseName].length >= fullOfStudents)
     {
+     	
         // if odd number students, one house gets one more than others
-        // update countIsOdd, so other houses don't get extra students
+        // update countIsOdd, so other houses don't get extra students	
         if (countIsOdd)
         {
-            countIsOdd = false;
+       		countIsOdd = false;
             return false;
         }
+        // if even number of students but not divisible by 4   
+        if (!dividesByFour)
+        {
+        	dividesByFour = true;
+        	countIsOdd = true;
+        	return false;
+        }
+        
+        openHouses--;
         return true;
     }
     return false;
