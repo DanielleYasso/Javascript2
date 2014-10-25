@@ -67,7 +67,7 @@ $(document).ready(function()
 
 	    // get user input for count value
 	    countValue = $("#student_count").val();
-	    if (!countValue || countValue == NaN)
+	    if (!countValue || countValue == NaN || countValue < 0)
 	    {
 	        countValue = 0;
 	    }
@@ -90,7 +90,6 @@ $(document).ready(function()
 	    {
 	    	fullOfStudents = 1;
 	    }
-
 
 	    // Display new value of studentCount in the div
 	    $(countDiv).text("Count: " + studentCount);
